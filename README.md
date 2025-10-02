@@ -94,7 +94,34 @@ Visual Basic for Applications (VBA) macro for Microsoft Outlook that:
 ## Acknowledgments
 - Built with Outlook’s Rules and MAPI **PropertyAccessor** patterns for robust SMTP resolution.
 
-## Macro reference (for discoverability)
-```vb
+---
+title: AutoDeleteDomains – Overview & Workflow
+tags: [Outlook, VBA, rules, email, anti-spam]
+modified: 2025-10-01
+---
+
+# Overview
+The module defines a single macro, `AddSelectedEmailsDomainsToBlockedListAndMoveToDeleted`, that lets an Outlook user build a client-side rule which moves messages from specified sender domains into **Deleted Items**. It collects domains from the currently selected mail, merges them with any domains already on the rule, confirms the change with the user, updates the rule, and then immediately sweeps both the selection and the active folder to enforce the new rule. Helper routines handle SMTP resolution, domain parsing/normalization, string joining, and the sweep operation.
+
+## Main workflow: `AddSelectedEmailsDomainsToBlockedListAndMoveToDeleted`
+- **Initialization and selection check.** The macro grabs the active Outlook application, namespace, and selection, and creates a `Scripting.Dictionary` keyed case-insensitively so each domain is stored once. If no mail is selected it exits early with a prompt.
+- **Rule lookup/creation.** The user is prompted for the rule name (default **Blocked Domains – Delete**). The macro tries to fetch an existing rule; if it doesn’t exist, it creates one configured to move matches to **Deleted Items**, ensuring the default Deleted Items folder is accessible.
+- **Load existing domains.** It reads any currently configured **Sender’s address includes** entries from the rule (handling both array- and string-based data), normalizes them, and seeds the dictionary so the new domains merge with the old list without duplicates.
+- **Harvest domains from selection.** Every selected `MailItem` is processed via `ExtractSenderDomain`; any valid domain is added to the dictionary.
+- **User confirmation.** If the dictionary is empty, the user is notified. Otherwise, the macro displays all domains slated for inclusion (via `JoinStringArray`) and asks for confirmation before proceeding.
+- **Rule update and persistence.** The rule’s sender-address condition is replaced with the dictionary keys, re-enabled, and the **Move to Deleted Items** action is reinforced. The updated ruleset is saved back to the store.
+- **Immediate sweep.** It calls `MoveEmailsToFolder` first on the current selection and then on every item in the active folder, counting how many messages were moved to **Deleted Items**, and finally shows a summary dialog with the domain count and moved message tally.
+- **Error handling.** Any unexpected failure surfaces through a message box with the error description and code.
+
+## Helper routines
+- **`ExtractSenderDomain`** resolves the best SMTP address (via `ResolveSmtpAddress`), pulls out the domain, normalizes it, and returns an empty string if no valid address is found.
+- **`ResolveSmtpAddress`** sequentially attempts three strategies: Exchange primary SMTP through `GetExchangeUser`, the MAPI `PR_SMTP_ADDRESS` property, and finally the raw `SenderEmailAddress`. Each step tolerates missing data using `On Error Resume Next`. The result is trimmed for cleanliness.
+- **`GetDomainFromEmail`** locates the `@` sign and returns the substring that follows, or an empty string if no domain is present.
+- **`NormalizeDomain`** trims whitespace, lowercases the text, and strips leading `<` or trailing `>` characters that sometimes surround addresses in headers.
+- **`JoinStringArray`** unifies either an array or scalar into a single string separated by an optional delimiter (newline in the confirmation dialog).
+- **`MoveEmailsToFolder`** works for both a `Selection` collection and a folder’s `Items`. For selections it iterates forward; for folders it iterates backwards to avoid skipping entries after moving. It moves any mail whose normalized sender domain appears in the dictionary and counts the moves.
+
+## Testing
+- Not run (not requested).
 ' Entry point
 Sub AddSelectedEmailsDomainsToBlockedListAndMoveToDeleted()
