@@ -240,25 +240,23 @@ ts.Close
 	 - A) Basic tips (sign macros; avoid “Enable all macros”)
 	 - B) Detailed steps (SelfCert walkthrough; Trust Center screenshots)
 	 - C) No security guidance
-
 10. **User-experience aids in README** *(Select all that apply)*
-			- A) **Screenshot/GIF** of running the macro
-			- B) Step-by-step **Ribbon/QAT button** setup
-			- C) **Troubleshooting** table (symptom → fix)
-			- D) “How SMTP is resolved” mini-diagram
+	 - A) **Screenshot/GIF** of running the macro
+	 - B) Step-by-step **Ribbon/QAT button** setup
+	 - C) **Troubleshooting** table (symptom → fix)
+	 - D) “How SMTP is resolved” mini-diagram
 
 11. **Project sequencing priority**
-			- A) Documentation/licensing first
-			- B) License/compat + code changes in parallel
-			- C) Code optimizations first
-			- D) Need stakeholder input
+	 - A) Documentation/licensing first
+	 - B) License/compat + code changes in parallel
+	 - C) Code optimizations first
+	 - D) Need stakeholder input
 
 12. **Advanced sweeps (Inbox + subfolders)**
-			- A) Yes—high-priority addition
-			- B) Maybe—offer as opt-in
-			- C) No—scope creep / avoid
-			- D) Need to survey workflows
-
+	 - A) Yes—high-priority addition
+	 - B) Maybe—offer as opt-in
+	 - C) No—scope creep / avoid
+	 - D) Need to survey workflows
 
 # Additional Enhancement Ideas
 - Clarify in README that blocking `example.com` also blocks subdomains because the rule uses substring matching (echoing existing notes).
