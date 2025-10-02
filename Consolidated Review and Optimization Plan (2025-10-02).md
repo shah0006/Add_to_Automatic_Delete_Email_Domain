@@ -190,74 +190,75 @@ ts.Close
 - [ ] Clarify substring matching: blocking `example.com` also blocks subdomains
 - [ ] (Optional) Consider trimming trailing dots and IDN→Punycode handling
 
-# Multiple-Choice Questions (from both reviews; choose one unless noted)
+# Multiple-Choice Questions 
 1. **Default behavior after updating the rule**
-	A) Move only the **selected** messages now
-	B) Prompt to **also sweep the current folder** (default **No**)
-	C) Prompt to also sweep the current folder (default **Yes**)
-	D) Always sweep the current folder **without prompting**
+	 - A) Move only the **selected** messages now
+	 - B) Prompt to **also sweep the current folder** (default **No**)
+	 - C) Prompt to also sweep the current folder (default **Yes**)
+	 - D) Always sweep the current folder **without prompting**
 
 2. **Scope of sweeping (if chosen)** *(Select all that apply)*
-	A) Current folder only
-	B) Current folder + **subfolders**
-	C) **Inbox** only
-	D) Inbox + subfolders
-	E) Custom folder picker at runtime
+	 - A) Current folder only
+	 - B) Current folder + **subfolders**
+	 - C) **Inbox** only
+	 - D) Inbox + subfolders
+	 - E) Custom folder picker at runtime
 
 3. **SMTP resolution coverage**
-	A) Current approach (User via `GetExchangeUser` → `PR_SMTP_ADDRESS` → `SenderEmailAddress`)
-	B) **Add distribution lists** via `GetExchangeDistributionList`
-	C) Add DLs and attempt header-based expansion if DL SMTP isn’t exposed
-	D) Keep current approach; document DL limitation
+	 - A) Current approach (User via `GetExchangeUser` → `PR_SMTP_ADDRESS` → `SenderEmailAddress`)
+	 - B) **Add distribution lists** via `GetExchangeDistributionList`
+	 - C) Add DLs and attempt header-based expansion if DL SMTP isn’t exposed
+	 - D) Keep current approach; document DL limitation
 
 4. **Existing-domain delimiter handling**
-	A) Split on **semicolon** only
-	B) Split on semicolon and **comma**
-	C) Normalize **CR, LF, comma, semicolon** to a single delimiter and split
-	D) Use **RegExp** for tokenization (adds reference)
+	 - A) Split on **semicolon** only
+	 - B) Split on semicolon and **comma**
+	 - C) Normalize **CR, LF, comma, semicolon** to a single delimiter and split
+	 - D) Use **RegExp** for tokenization (adds reference)
 
 5. **Large rule guardrail**
-	A) Warn if > **200** domains
-	B) Warn if > **400** domains
-	C) Warn if > **600** domains
-	D) No warning
+	 - A) Warn if > **200** domains
+	 - B) Warn if > **400** domains
+	 - C) Warn if > **600** domains
+	 - D) No warning
 
 6. **Performance optimization (caching)**
-	A) **Enable caching** within a run (EntryID → domain)
-	B) Skip caching (simplicity preferred)
+	 - A) **Enable caching** within a run (EntryID → domain)
+	 - B) Skip caching (simplicity preferred)
 
 7. **Audit/backup of blocked domains**
-	A) **Write merged list** to a text file after updates
-	B) Do not write to disk (privacy/IT policy concerns)
-	C) Only write to disk **on user confirmation**
+	 - A) **Write merged list** to a text file after updates
+	 - B) Do not write to disk (privacy/IT policy concerns)
+	 - C) Only write to disk **on user confirmation**
 
 8. **Compatibility messaging in README**
-	A) Prominent **top-level callout**
-	B) Mentioned later in README
-	C) Omit compatibility note
+	 - A) Prominent **top-level callout**
+	 - B) Mentioned later in README
+	 - C) Omit compatibility note
 
 9. **Security guidance level**
-	A) Basic tips (sign macros; avoid “Enable all macros”)
-	B) Detailed steps (SelfCert walkthrough; Trust Center screenshots)
-	C) No security guidance
+	 - A) Basic tips (sign macros; avoid “Enable all macros”)
+	 - B) Detailed steps (SelfCert walkthrough; Trust Center screenshots)
+	 - C) No security guidance
 
 10. **User-experience aids in README** *(Select all that apply)*
-	A) **Screenshot/GIF** of running the macro
-	B) Step-by-step **Ribbon/QAT button** setup
-	C) **Troubleshooting** table (symptom → fix)
-	D) “How SMTP is resolved” mini-diagram
+		- A) **Screenshot/GIF** of running the macro
+		- B) Step-by-step **Ribbon/QAT button** setup
+		- C) **Troubleshooting** table (symptom → fix)
+		- D) “How SMTP is resolved” mini-diagram
 
 11. **Project sequencing priority**
-	A) Documentation/licensing first
-	B) License/compat + code changes in parallel
-	C) Code optimizations first
-	D) Need stakeholder input
+		- A) Documentation/licensing first
+		- B) License/compat + code changes in parallel
+		- C) Code optimizations first
+		- D) Need stakeholder input
 
 12. **Advanced sweeps (Inbox + subfolders)**
-	A) Yes—high-priority addition
-	B) Maybe—offer as opt-in
-	C) No—scope creep / avoid
-	D) Need to survey workflows
+		- A) Yes—high-priority addition
+		- B) Maybe—offer as opt-in
+		- C) No—scope creep / avoid
+		- D) Need to survey workflows
+
 
 # Additional Enhancement Ideas
 - Clarify in README that blocking `example.com` also blocks subdomains because the rule uses substring matching (echoing existing notes).
